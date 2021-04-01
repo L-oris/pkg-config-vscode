@@ -1,14 +1,9 @@
 #include <stdio.h>
+#include <subprojects/json-c/json.h>
 
-#define PROJECT_NAME "vscode-c-ext"
-
-int main(int argc, char **argv)
+int main(void)
 {
-    if (argc != 1)
-    {
-        printf("%s takes no arguments.\n", argv[0]);
-        return 1;
-    }
-    printf("This is project %s.\n", PROJECT_NAME);
+    printf("Version: %s\n", json_c_version());
+    printf("Version Number: %d\n", json_c_version_num());
     return 0;
 }
