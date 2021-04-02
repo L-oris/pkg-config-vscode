@@ -10,7 +10,11 @@ json_c_proj = cmake.subproject('json-c')
 # message('CMake targets for json-c:\n - ' + '\n - '.join(json_c_proj.target_list()))
 json_c_dep = json_c_proj.dependency('json-c')
 
-exe = executable('vscode-c-ext', 'main.c',
+src_exe = [
+  'main.c',
+  'configurations.c'
+]
+exe = executable('vscode-c-ext', src_exe,
   dependencies : json_c_dep,
   include_directories : [subprojects_include_dir],
   install : true
