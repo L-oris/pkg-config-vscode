@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <json-c/json.h>
 #include "configurations.h"
+#include "string_utils.h"
 
 #define PATH_TO_JSON_FILE "../.vscode/c_cpp_properties.json"
 
@@ -31,6 +32,9 @@ int main(int argc, char *argv[])
     printf("Successful:\n%s\n", pkg_config_stdout);
 
     pclose(pkg_config_file);
+
+    string_vector tokens = string_split("hello world", ' ');
+    printf("found %d tokens in 'hello world'\n", tokens.len);
     return 0;
 }
 
