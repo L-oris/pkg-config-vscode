@@ -3,6 +3,12 @@ project('vscode-c-ext', 'c',
   default_options : ['warning_level=3'],
 )
 
+
+
+# ===========
+# Subprojects
+# ===========
+
 subprojects_include_dir = include_directories('subprojects')
 
 cmake = import('cmake')
@@ -10,17 +16,57 @@ json_c_proj = cmake.subproject('json-c')
 # message('CMake targets for json-c:\n - ' + '\n - '.join(json_c_proj.target_list()))
 json_c_dep = json_c_proj.dependency('json-c')
 
-subdir('libs')
+subprojects = [json_c_dep]
 
-src_exe = [
-  'main.c',
-  'configurations.c'
+
+
+# ===========
+# Libs
+# ===========
+
+libs_include_dir = include_directories('libs/include')
+
+string_utils_src = [
+    'libs/string/string_split.c',
+    'libs/string/string_starts_with.c',
+    'libs/string/string_strip_prefix.c',
+    'libs/string/string_vector.c',
 ]
-executable('vscode-c-ext', src_exe,
-  dependencies : json_c_dep,
-  link_with : [string_utils_lib],
+string_utils = library(
+    'string_utils',
+    string_utils_src, 
+    include_directories : libs_include_dir,
+)
+
+libs = [string_utils]
+
+
+
+# ===========
+# Unit Tests
+# ===========
+
+string_utils_tests = executable('string_tests',
+    sources: 'tests/string_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+
+test('string_utils', string_utils_tests)
+
+
+
+# ===========
+# Executable
+# ===========
+
+bin_src = [
+  'bin/main.c',
+  'bin/configurations.c'
+]
+executable('add-vscode-header-files', bin_src,
+  dependencies : subprojects,
+  link_with : libs,
   include_directories : [subprojects_include_dir, libs_include_dir],
   install : true
 )
-
-subdir('tests')
