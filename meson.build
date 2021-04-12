@@ -62,7 +62,8 @@ test('string_utils', string_utils_tests)
 
 bin_src = [
   'bin/main.c',
-  'bin/configurations.c'
+  'bin/configurations.c',
+  'bin/app_err.c',
 ]
 executable('add-vscode-header-files', bin_src,
   dependencies : subprojects,

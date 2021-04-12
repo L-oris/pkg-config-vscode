@@ -3,6 +3,7 @@
 #include <json-c/json.h>
 #include "configurations.h"
 #include "string_utils.h"
+#include "app_err.h"
 
 #define PATH_TO_JSON_FILE "../.vscode/c_cpp_properties.json"
 
@@ -11,7 +12,7 @@
 
 // example program: `libmongoc-1.0`
 
-char *get_compiler_flags_from_pkg_config(char *lib_name)
+char *get_compiler_flags_from_pkg_config(char *lib_name, app_err *err)
 {
     char command[PKG_CONFIG_COMMAND_BUFFER_LEN];
     sprintf(command, "pkg-config --cflags %s", lib_name);
@@ -21,7 +22,7 @@ char *get_compiler_flags_from_pkg_config(char *lib_name)
     FILE *pkg_config_stream = popen(command, "r");
     if (!pkg_config_stream)
     {
-        fprintf(stderr, "ERROR -- Failed to execute command `%s`\n", command);
+        app_err_set(err, INVALID_SHELL_COMMAND, command);
         return NULL;
     }
 
@@ -31,7 +32,7 @@ char *get_compiler_flags_from_pkg_config(char *lib_name)
 
     if (!fgets_result)
     {
-        fprintf(stderr, "ERROR -- Failed to execute command `%s`\n", command);
+        app_err_set(err, INVALID_LIB_PROVIDED, lib_name);
         free(stdout_buffer);
         return NULL;
     }
@@ -41,6 +42,8 @@ char *get_compiler_flags_from_pkg_config(char *lib_name)
 
 int main(int argc, char *argv[])
 {
+    app_err err = app_err_init();
+
     if (argc < 2)
     {
         fprintf(stderr, "at least one argument required\n");
@@ -50,14 +53,14 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
         printf("DEBUG -- Iterating lib `%s`\n", argv[i]);
-        char *pkg_config_stdout_buffer = get_compiler_flags_from_pkg_config(argv[i]);
-        if (!pkg_config_stdout_buffer)
+        char *pkg_config_stdout_buffer = get_compiler_flags_from_pkg_config(argv[i], &err);
+        if (app_err_happened(&err))
         {
+            app_err_print(&err);
             continue;
         }
 
         string_vector compiler_flags = string_split(pkg_config_stdout_buffer, ' ');
-        // TODO LORIS?: create an iterator that accepts a fn pointer and frees the vector after iteration is done
         for (int j = 0; j < compiler_flags.len; j++)
         {
             char *trimmed_compiler_flag = string_strip_prefix(compiler_flags.data[j], "-I");
