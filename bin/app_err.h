@@ -3,6 +3,8 @@ typedef enum
     OK,
     INVALID_SHELL_COMMAND,
     INVALID_LIB_PROVIDED,
+    JSON_FAILED_READING,
+    JSON_FAILED_WRITING,
 } app_err;
 
 app_err app_err_init();

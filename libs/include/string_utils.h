@@ -9,6 +9,8 @@ typedef struct _string_vector
     int len;
 } string_vector;
 
+string_vector string_vector_empty();
+
 void string_vector_free(string_vector string_vec);
 
 // Splits the strings into tokens.

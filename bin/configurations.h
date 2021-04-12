@@ -3,14 +3,15 @@
 
 #include <json-c/json.h>
 
-struct configurations
+// TODO LORIS: rename typedef to `configs` and vars to `confs`
+typedef struct
 {
-    json_object *object;
+    json_object *jsn;
     int len;
-};
+} configurations;
 
-struct configurations configurations_get(json_object *root);
+configurations configurations_get(json_object *root);
 
-void configurations_update_include_paths(struct configurations configs, char *new_values[], int new_values_len);
+void configurations_update_include_paths(configurations configs, char *new_values[], int new_values_len);
 
 #endif
