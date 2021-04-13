@@ -46,7 +46,7 @@ libs = [string_utils]
 # Unit Tests
 # ===========
 
-string_utils_tests = executable('string_tests',
+string_utils_tests = executable('string-tests',
     sources: 'tests/string_tests.c', 
     link_with : [libs],
     include_directories : libs_include_dir,
@@ -61,11 +61,11 @@ test('string_utils', string_utils_tests)
 # ===========
 
 bin_src = [
-  'bin/main.c',
-  'bin/configurations.c',
-  'bin/app_err.c',
+  'app/main.c',
+  'app/configurations.c',
+  'app/app_err.c',
 ]
-executable('add-vscode-header-files', bin_src,
+executable('pkg-config-vscode', bin_src,
   dependencies : subprojects,
   link_with : libs,
   include_directories : [subprojects_include_dir, libs_include_dir],
