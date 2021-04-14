@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <json-c/json.h>
 #include "configurations.h"
 #include "string_utils.h"
@@ -74,9 +75,16 @@ string_vector compiler_flags_get_from_pkg_config(char *lib_name, app_err *err)
     return string_split(stdout_buffer, ' ');
 }
 
-void compiler_flags_parse(string_vector *compiler_flags, app_err *err)
+char *compiler_flag_strip_prefix(char *compiler_flag)
 {
-    // TODO LORIS: strip_prefix and trimPend
+    return string_strip_prefix(compiler_flag, "-I");
+}
+
+string_vector compiler_flags_parse(string_vector *compiler_flags, app_err *err)
+{
+    string_vector_map(compiler_flags, 300, compiler_flag_strip_prefix);
+    string_vector_map(compiler_flags, 300, string_rtrim);
+    return *compiler_flags;
 }
 
 void compiler_flags_write_to_json(string_vector *compiler_flags, app_err *err)

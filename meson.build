@@ -27,6 +27,7 @@ subprojects = [json_c_dep]
 libs_include_dir = include_directories('libs/include')
 
 string_utils_src = [
+    'libs/string/string_rtrim.c',
     'libs/string/string_split.c',
     'libs/string/string_starts_with.c',
     'libs/string/string_strip_prefix.c',
