@@ -1,38 +1,39 @@
 #include <stdio.h>
 #include <json-c/json.h>
-#include "configurations.h"
+#include "jsn_configs.h"
 #include "app_err.h"
+#include "jsn_root.h"
 
-configurations configurations_get(json_object *jsn_root)
+jsn_configs jsn_configs_get(jsn_root *jsn_rt)
 {
-    json_object *jsn_configs = json_object_object_get(jsn_root, "configurations");
-    if (!jsn_configs)
+    json_object *jsn_confs = json_object_object_get(jsn_rt->jsn, "configurations");
+    if (!jsn_confs)
     {
-        jsn_configs = json_object_new_array();
-        json_object_object_add(jsn_root, "configurations", jsn_configs);
+        jsn_confs = json_object_new_array();
+        json_object_object_add(jsn_rt->jsn, "configurations", jsn_confs);
     }
 
-    int configs_len = json_object_array_length(jsn_configs);
+    int configs_len = json_object_array_length(jsn_confs);
     if (configs_len == 0)
     {
         json_object *a_config = json_object_new_object();
         json_object_object_add(a_config, "name", json_object_new_string("default"));
-        json_object_array_add(jsn_configs, a_config);
+        json_object_array_add(jsn_confs, a_config);
         configs_len += 1;
     }
 
-    configurations configs = {
-        .jsn = jsn_configs,
+    jsn_configs confs = {
+        .jsn = jsn_confs,
         .len = configs_len};
-    return configs;
+    return confs;
 }
 
-void configurations_update_include_paths(configurations configs, char *new_values[], int new_values_len)
+void jsn_configs_update_include_paths(jsn_configs jsn_confs, char *new_values[], int new_values_len)
 {
-    printf("DEBUG -- updating %d configurations\n", configs.len);
-    for (int config_idx = 0; config_idx < configs.len; config_idx++)
+    printf("DEBUG -- updating %d configurations\n", jsn_confs.len);
+    for (int config_idx = 0; config_idx < jsn_confs.len; config_idx++)
     {
-        json_object *a_config = json_object_array_get_idx(configs.jsn, config_idx);
+        json_object *a_config = json_object_array_get_idx(jsn_confs.jsn, config_idx);
         json_object *a_config_include_path = json_object_object_get(a_config, "includePath");
         if (!a_config_include_path)
         {

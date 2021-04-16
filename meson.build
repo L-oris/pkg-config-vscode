@@ -1,4 +1,4 @@
-project('vscode-c-ext', 'c',
+project('pkg-config-vscode', 'c',
   version : '0.1',
   default_options : ['warning_level=3'],
 )
@@ -63,7 +63,9 @@ test('string_utils', string_utils_tests)
 
 bin_src = [
   'app/main.c',
-  'app/configurations.c',
+  'app/jsn_configs.c',
+  'app/jsn_root.c',
+  'app/compiler_flags.c',
   'app/app_err.c',
 ]
 executable('pkg-config-vscode', bin_src,
