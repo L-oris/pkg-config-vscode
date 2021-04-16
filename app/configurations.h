@@ -1,7 +1,6 @@
-#ifndef CONFIGURATIONS_H
-#define CONFIGURATIONS_H
-
+#pragma once
 #include <json-c/json.h>
+#include "app_err.h"
 
 // TODO LORIS: rename typedef to `configs` and vars to `confs`
 typedef struct
@@ -13,5 +12,3 @@ typedef struct
 configurations configurations_get(json_object *root);
 
 void configurations_update_include_paths(configurations configs, char *new_values[], int new_values_len);
-
-#endif

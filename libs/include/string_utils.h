@@ -1,6 +1,4 @@
-#ifndef STRING_UTILS_H
-#define STRING_UTILS_H
-
+#pragma once
 #include <stdbool.h>
 
 typedef struct _string_vector
@@ -29,5 +27,3 @@ char *string_strip_prefix(char *src_string, char *prefix);
 // The function modifies str, so constant strings are going to crash the program.
 // If there are no characters to be trimmed, the str param is simply returned as is.
 char *string_rtrim(char *str);
-
-#endif

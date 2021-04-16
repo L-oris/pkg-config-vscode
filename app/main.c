@@ -26,20 +26,22 @@ json_object *jsn_root_read_from_file(char *path_to_json_file, app_err *err)
     return jsn_root;
 }
 
+json_object *jsn_root_initialize()
+{
+    json_object *jsn_root = json_object_new_object();
+    json_object_object_add(jsn_root, "version", json_object_new_int(4));
+    return jsn_root;
+}
+
 void jsn_root_print(json_object *jsn_root)
 {
     printf("DEBUG -- The json file:\n\n%s\n", json_object_to_json_string_ext(jsn_root, JSON_C_TO_STRING_PRETTY));
 }
 
-void jsn_root_validate(json_object *jsn_root, app_err *err)
-{
-    // TODO LORIS:
-    // check if it contains at least one configuration and
-    // if every configuration has an "includePath" field
-}
-
 void jsn_root_write_to_file(json_object *jsn_root, char *path_to_json_file, app_err *err)
 {
+    // TODO LORIS: create directory if not exists
+    // https://stackoverflow.com/questions/7430248/creating-a-new-directory-in-c
     int write_result = json_object_to_file_ext(path_to_json_file, jsn_root, JSON_C_TO_STRING_NOSLASHESCAPE);
     if (write_result == -1)
     {
@@ -80,7 +82,7 @@ char *compiler_flag_strip_prefix(char *compiler_flag)
     return string_strip_prefix(compiler_flag, "-I");
 }
 
-string_vector compiler_flags_parse(string_vector *compiler_flags, app_err *err)
+string_vector compiler_flags_parse(string_vector *compiler_flags)
 {
     string_vector_map(compiler_flags, 300, compiler_flag_strip_prefix);
     string_vector_map(compiler_flags, 300, string_rtrim);
@@ -90,13 +92,13 @@ string_vector compiler_flags_parse(string_vector *compiler_flags, app_err *err)
 void compiler_flags_write_to_json(string_vector *compiler_flags, app_err *err)
 {
     json_object *jsn_root = jsn_root_read_from_file(PATH_TO_JSON_FILE, err);
-    CHECK_APP_ERR_OR_RETURN();
-
-    jsn_root_validate(jsn_root, err);
-    CHECK_APP_ERR_OR_RETURN();
+    if (*err != OK)
+    {
+        app_err_reset(err);
+        jsn_root = jsn_root_initialize();
+    }
 
     configurations configs = configurations_get(jsn_root);
-    // TODO LORIS: fn configurations_update_include_paths should not fail; validate json file beforehand
     configurations_update_include_paths(configs, (*compiler_flags).data, (*compiler_flags).len);
     jsn_root_print(jsn_root);
 
@@ -125,7 +127,7 @@ int main(int argc, char *argv[])
             app_err_print(&err);
             continue;
         }
-        compiler_flags_parse(&compiler_flags, &err);
+        compiler_flags_parse(&compiler_flags);
 
         compiler_flags_write_to_json(&compiler_flags, &err);
         if (app_err_happened(&err))

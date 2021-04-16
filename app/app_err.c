@@ -37,6 +37,11 @@ void app_err_set(app_err *err, app_err new_value, char *msg)
     }
 }
 
+void app_err_reset(app_err *err)
+{
+    app_err_set(err, OK, "");
+}
+
 // TODO LORIS?: more beautiful logging library
 void app_err_print(app_err *err)
 {

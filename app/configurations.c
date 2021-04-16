@@ -1,30 +1,29 @@
 #include <stdio.h>
 #include <json-c/json.h>
 #include "configurations.h"
+#include "app_err.h"
 
 configurations configurations_get(json_object *jsn_root)
 {
-    // TODO LORIS: get rid of this altogether when cases below are refactored
-    configurations configs = {
-        .jsn = NULL,
-        .len = 0};
     json_object *jsn_configs = json_object_object_get(jsn_root, "configurations");
     if (!jsn_configs)
     {
-        // TODO LORIS: create a default item instead
-        fprintf(stderr, "\"configurations\" field not specified\n");
-        return configs;
-    }
-    int len = json_object_array_length(jsn_configs);
-    if (len == 0)
-    {
-        // TODO LORIS: create a default item instead and update len
-        fprintf(stderr, "empty array for configurations\n");
-        return configs;
+        jsn_configs = json_object_new_array();
+        json_object_object_add(jsn_root, "configurations", jsn_configs);
     }
 
-    configs.jsn = jsn_configs;
-    configs.len = len;
+    int configs_len = json_object_array_length(jsn_configs);
+    if (configs_len == 0)
+    {
+        json_object *a_config = json_object_new_object();
+        json_object_object_add(a_config, "name", json_object_new_string("default"));
+        json_object_array_add(jsn_configs, a_config);
+        configs_len += 1;
+    }
+
+    configurations configs = {
+        .jsn = jsn_configs,
+        .len = configs_len};
     return configs;
 }
 
@@ -37,9 +36,10 @@ void configurations_update_include_paths(configurations configs, char *new_value
         json_object *a_config_include_path = json_object_object_get(a_config, "includePath");
         if (!a_config_include_path)
         {
-            // TODO LORIS: create a default item instead
-            fprintf(stderr, "includePath field not found\n");
-            return;
+            a_config_include_path = json_object_new_array();
+            json_object_array_add(a_config_include_path, json_object_new_string("${workspaceFolder}/**"));
+            json_object_object_add(a_config, "includePath", a_config_include_path);
+            // TODO LORIS: log::debug
         }
 
         for (int value_idx = 0; value_idx < new_values_len; value_idx++)
