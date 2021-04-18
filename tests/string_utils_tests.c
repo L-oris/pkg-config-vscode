@@ -71,8 +71,8 @@ void string_rtrim_tests()
 
 int main()
 {
-    // string_split_tests();
-    // string_starts_with_tests();
-    // string_strip_prefix_tests();
+    string_split_tests();
+    string_starts_with_tests();
+    string_strip_prefix_tests();
     string_rtrim_tests();
 }

@@ -29,7 +29,11 @@ libs_include_dir = include_directories('libs/include')
 string_vector_src = [
     'libs/string_vector/string_vector_free.c',
     'libs/string_vector/string_vector_new.c',
+    'libs/string_vector/string_vector_push.c',
     'libs/string_vector/string_vector_map.c',
+    'libs/string_vector/string_vector_concat.c',
+    'libs/string_vector/string_vector_print.c',
+    'libs/string_vector/string_vector_includes.c',
 ]
 string_vector = library(
     'string-vector',
@@ -64,6 +68,14 @@ string_utils_tests = executable('string-utils-tests',
 )
 
 test('string_utils', string_utils_tests)
+
+string_vector_tests = executable('string-vector-tests',
+    sources: 'tests/string_vector_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+
+test('string_vector', string_vector_tests)
 
 
 
