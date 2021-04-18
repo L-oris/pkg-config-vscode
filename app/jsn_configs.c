@@ -4,7 +4,7 @@
 #include "app_err.h"
 #include "jsn_root.h"
 
-jsn_configs jsn_configs_get(jsn_root *jsn_rt)
+jsn_configs jsn_configs_get(JsnRoot *jsn_rt)
 {
     json_object *jsn_confs = json_object_object_get(jsn_rt->jsn, "configurations");
     if (!jsn_confs)

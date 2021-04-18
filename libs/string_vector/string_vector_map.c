@@ -1,25 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
-#include "string_utils.h"
+#include "string_vector.h"
 
-string_vector string_vector_empty()
-{
-    string_vector ret = {
-        .data = NULL,
-        .len = 0};
-    return ret;
-}
-
-void string_vector_free(string_vector string_vec)
-{
-    for (int i = 0; i < string_vec.len; i++)
-    {
-        free(*(string_vec.data + i));
-    }
-    free(string_vec.data);
-}
-
-void string_vector_map(string_vector *string_vec, int max_str_len, char *(*fp)(char *))
+void string_vector_map(StringVector *string_vec, int max_str_len, char *(*fp)(char *))
 {
     char buffer[max_str_len];
     char *updated_buffer;

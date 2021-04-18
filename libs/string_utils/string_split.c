@@ -29,7 +29,7 @@ static int count_delimiters(char str[], char delimiter)
     return count;
 }
 
-string_vector string_split(char *src_string, char delimiter)
+StringVector string_split(char *src_string, char delimiter)
 {
     int substrings_len = count_delimiters(src_string, delimiter) + 1;
     char **substrings = malloc(sizeof(char *) * substrings_len);
@@ -55,8 +55,8 @@ string_vector string_split(char *src_string, char delimiter)
         src_string = &src_string[index_of_found + 1];
     }
 
-    string_vector r = {
+    StringVector string_vec = {
         .data = substrings,
         .len = substrings_len};
-    return r;
+    return string_vec;
 }

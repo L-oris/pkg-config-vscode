@@ -9,6 +9,6 @@ typedef struct
     int len;
 } jsn_configs;
 
-jsn_configs jsn_configs_get(jsn_root *jsn_rt);
+jsn_configs jsn_configs_get(JsnRoot *jsn_rt);
 
 void jsn_configs_update_include_paths(jsn_configs jsn_confs, char *new_values[], int new_values_len);

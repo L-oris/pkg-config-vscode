@@ -26,20 +26,30 @@ subprojects = [json_c_dep]
 
 libs_include_dir = include_directories('libs/include')
 
+string_vector_src = [
+    'libs/string_vector/string_vector_free.c',
+    'libs/string_vector/string_vector_new.c',
+    'libs/string_vector/string_vector_map.c',
+]
+string_vector = library(
+    'string-vector',
+    string_vector_src, 
+    include_directories : libs_include_dir,
+)
+
 string_utils_src = [
-    'libs/string/string_rtrim.c',
-    'libs/string/string_split.c',
-    'libs/string/string_starts_with.c',
-    'libs/string/string_strip_prefix.c',
-    'libs/string/string_vector.c',
+    'libs/string_utils/string_rtrim.c',
+    'libs/string_utils/string_split.c',
+    'libs/string_utils/string_starts_with.c',
+    'libs/string_utils/string_strip_prefix.c',
 ]
 string_utils = library(
-    'string_utils',
+    'string-utils',
     string_utils_src, 
     include_directories : libs_include_dir,
 )
 
-libs = [string_utils]
+libs = [string_utils, string_vector]
 
 
 
@@ -47,8 +57,8 @@ libs = [string_utils]
 # Unit Tests
 # ===========
 
-string_utils_tests = executable('string-tests',
-    sources: 'tests/string_tests.c', 
+string_utils_tests = executable('string-utils-tests',
+    sources: 'tests/string_utils_tests.c', 
     link_with : [libs],
     include_directories : libs_include_dir,
 )
@@ -61,16 +71,18 @@ test('string_utils', string_utils_tests)
 # Executable
 # ===========
 
-bin_src = [
-  'app/main.c',
+app_include_dir = include_directories('app/include')
+
+app_src = [
+  'app/app_err.c',
+  'app/compiler_flags.c',
   'app/jsn_configs.c',
   'app/jsn_root.c',
-  'app/compiler_flags.c',
-  'app/app_err.c',
+  'app/main.c',
 ]
-executable('pkg-config-vscode', bin_src,
+executable('pkg-config-vscode', app_src,
   dependencies : subprojects,
   link_with : libs,
-  include_directories : [subprojects_include_dir, libs_include_dir],
+  include_directories : [subprojects_include_dir, libs_include_dir, app_include_dir],
   install : true
 )

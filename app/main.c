@@ -5,8 +5,6 @@
 
 // example program: `libmongoc-1.0`
 
-// TODO LORIS: use references to indicate ownership and who should free
-
 int main(int argc, char *argv[])
 {
     app_err err = app_err_init();
@@ -21,8 +19,9 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
         // TODO LORIS: fn parse_lib
+        // TODO LORIS: merge multiple compiler_flag_vectors together before writing to file
         printf("DEBUG -- Iterating lib `%s`\n", argv[i]);
-        string_vector compiler_flags = compiler_flags_get_from_pkg_config(argv[i], &err);
+        StringVector compiler_flags = compiler_flags_get_from_pkg_config(argv[i], &err);
         if (app_err_happened(&err))
         {
             app_err_print(&err);
