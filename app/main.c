@@ -2,6 +2,7 @@
 #include "app_err.h"
 #include "compiler_flags.h"
 #include "string_utils.h"
+#include "log.h"
 
 // example program: `libmongoc-1.0`
 
@@ -19,7 +20,7 @@ int main(int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
         // TODO LORIS: fn parse_lib
-        printf("DEBUG -- Iterating lib `%s`\n", argv[i]);
+        log_infof("iterating lib \"%s\"\n", argv[i]);
         StringVector compiler_flags = compiler_flags_get_from_pkg_config(argv[i], &err);
         if (app_err_happened(&err))
         {

@@ -2,6 +2,7 @@
 #include <json-c/json.h>
 #include "app_err.h"
 #include "jsn_root.h"
+#include "log.h"
 
 void jsn_root_free(JsnRoot jsn_rt)
 {
@@ -38,7 +39,7 @@ JsnRoot jsn_root_initialize()
 
 void jsn_root_print(JsnRoot *jsn_rt)
 {
-    printf("DEBUG -- The json file:\n\n%s\n", json_object_to_json_string_ext(jsn_rt->jsn, JSON_C_TO_STRING_PRETTY));
+    log_infof("updated json file:\n%s\n", json_object_to_json_string_ext(jsn_rt->jsn, JSON_C_TO_STRING_PRETTY));
 }
 
 void jsn_root_write_to_file(JsnRoot *jsn_rt, char *path_to_json_file, app_err *err)

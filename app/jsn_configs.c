@@ -3,6 +3,7 @@
 #include "jsn_configs.h"
 #include "app_err.h"
 #include "jsn_root.h"
+#include "log.h"
 
 jsn_configs jsn_configs_get(JsnRoot *jsn_rt)
 {
@@ -30,7 +31,7 @@ jsn_configs jsn_configs_get(JsnRoot *jsn_rt)
 
 void jsn_configs_update_include_paths(jsn_configs jsn_confs, char *new_values[], int new_values_len)
 {
-    printf("DEBUG -- updating %d configurations\n", jsn_confs.len);
+    log_infof("updating %d configuration(s)\n", jsn_confs.len);
     for (int config_idx = 0; config_idx < jsn_confs.len; config_idx++)
     {
         json_object *a_config = json_object_array_get_idx(jsn_confs.jsn, config_idx);
@@ -40,7 +41,6 @@ void jsn_configs_update_include_paths(jsn_configs jsn_confs, char *new_values[],
             a_config_include_path = json_object_new_array();
             json_object_array_add(a_config_include_path, json_object_new_string("${workspaceFolder}/**"));
             json_object_object_add(a_config, "includePath", a_config_include_path);
-            // TODO LORIS: log::debug
         }
 
         for (int value_idx = 0; value_idx < new_values_len; value_idx++)

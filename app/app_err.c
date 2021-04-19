@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "app_err.h"
+#include "log.h"
 
 static char error_string[2048];
 
@@ -42,9 +43,8 @@ void app_err_reset(app_err *err)
     app_err_set(err, OK, "");
 }
 
-// TODO LORIS?: more beautiful logging library
 void app_err_print(app_err *err)
 {
-    fprintf(stderr, "ERROR -- %s", error_string);
+    log_errorf("%s", error_string);
     app_err_set(err, OK, "");
 }

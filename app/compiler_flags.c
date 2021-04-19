@@ -3,6 +3,7 @@
 #include "app_err.h"
 #include "jsn_configs.h"
 #include "jsn_root.h"
+#include "log.h"
 
 #define COMMAND_BUFFER_LEN 200
 #define STDOUT_BUFFER_LEN 2048
@@ -13,7 +14,7 @@ StringVector compiler_flags_get_from_pkg_config(char *lib_name, app_err *err)
     char command[COMMAND_BUFFER_LEN];
     sprintf(command, "pkg-config --cflags %s", lib_name);
     // TODO LORIS: redirect stdout to file, and read it in case of error
-    printf("DEBUG -- Command: `%s`\n", command);
+    log_infof("pkg-config command: \"%s\"\n", command);
 
     FILE *pkg_config_stream = popen(command, "r");
     if (!pkg_config_stream)
