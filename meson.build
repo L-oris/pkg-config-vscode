@@ -37,18 +37,18 @@ std_string = library(
     include_directories : libs_include_dir,
 )
 
-string_vector_src = [
-    'libs/string_vector/string_vector_free.c',
-    'libs/string_vector/string_vector_new.c',
-    'libs/string_vector/string_vector_push.c',
-    'libs/string_vector/string_vector_map.c',
-    'libs/string_vector/string_vector_concat.c',
-    'libs/string_vector/string_vector_print.c',
-    'libs/string_vector/string_vector_includes.c',
+string_vec_src = [
+    'libs/string_vec/string_vec_free.c',
+    'libs/string_vec/string_vec_new.c',
+    'libs/string_vec/string_vec_push.c',
+    'libs/string_vec/string_vec_map.c',
+    'libs/string_vec/string_vec_concat.c',
+    'libs/string_vec/string_vec_print.c',
+    'libs/string_vec/string_vec_includes.c',
 ]
-string_vector = library(
-    'string-vector',
-    string_vector_src, 
+string_vec = library(
+    'string-vec',
+    string_vec_src, 
     include_directories : libs_include_dir,
 )
 
@@ -64,7 +64,7 @@ string_utils = library(
     include_directories : libs_include_dir,
 )
 
-libs = [string_utils, string_vector, std_string]
+libs = [string_utils, string_vec, std_string]
 
 
 
@@ -80,13 +80,13 @@ string_utils_tests = executable('string-utils-tests',
 
 test('string_utils', string_utils_tests)
 
-string_vector_tests = executable('string-vector-tests',
-    sources: 'tests/string_vector_tests.c', 
+string_vec_tests = executable('string-vec-tests',
+    sources: 'tests/string_vec_tests.c', 
     link_with : [libs],
     include_directories : libs_include_dir,
 )
 
-test('string_vector', string_vector_tests)
+test('string_vec', string_vec_tests)
 
 
 

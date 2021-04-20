@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
-#include "string_vector.h"
+#include "string_vec.h"
 
-void string_vector_map(StringVector *string_vec, int max_str_len, char *(*fp)(char *))
+void string_vec_map(StringVec *string_vec, int max_str_len, char *(*fp)(char *))
 {
     char buffer[max_str_len];
     char *updated_buffer;

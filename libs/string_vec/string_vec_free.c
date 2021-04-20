@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "string_vector.h"
+#include "string_vec.h"
 
-void string_vector_free(StringVector string_vec)
+void string_vec_free(StringVec string_vec)
 {
     for (int i = 0; i < string_vec.len; i++)
     {

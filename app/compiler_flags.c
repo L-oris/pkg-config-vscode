@@ -42,10 +42,10 @@ static char *strip_prefix(char *compiler_flag)
     return string_strip_prefix(compiler_flag, "-I");
 }
 
-StringVector compiler_flags_parse(StdString *pkg_config_stdout)
+StringVec compiler_flags_parse(StdString *pkg_config_stdout)
 {
-    StringVector compiler_flags = string_split(pkg_config_stdout->data, ' ');
-    string_vector_map(&compiler_flags, 300, strip_prefix);
-    string_vector_map(&compiler_flags, 300, string_rtrim);
+    StringVec compiler_flags = string_split(pkg_config_stdout->data, ' ');
+    string_vec_map(&compiler_flags, 300, strip_prefix);
+    string_vec_map(&compiler_flags, 300, string_rtrim);
     return compiler_flags;
 }

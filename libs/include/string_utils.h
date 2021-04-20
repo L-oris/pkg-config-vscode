@@ -1,10 +1,10 @@
 #pragma once
 #include <stdbool.h>
-#include "string_vector.h"
+#include "string_vec.h"
 
 // Splits the strings into tokens.
 // If no delimiter is found, the vector will contain a single element.
-StringVector string_split(char *src_string, char delimiter);
+StringVec string_split(char *src_string, char delimiter);
 
 bool string_starts_with(char *src_string, char *prefix);
 

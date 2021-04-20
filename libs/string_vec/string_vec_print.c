@@ -1,8 +1,8 @@
 
 #include <stdio.h>
-#include "string_vector.h"
+#include "string_vec.h"
 
-void string_vector_print(StringVector *string_vec)
+void string_vec_print(StringVec *string_vec)
 {
     printf("[ ");
     for (int i = 0; i < string_vec->len; i++)

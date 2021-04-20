@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "string_vector.h"
+#include "string_vec.h"
 
-void string_vector_concat(StringVector *dst, StringVector src)
+void string_vec_concat(StringVec *dst, StringVec src)
 {
     dst->data = realloc(dst->data, sizeof(char *) * (dst->len + src.len));
     int src_curr_index = 0;

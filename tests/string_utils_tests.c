@@ -6,7 +6,7 @@
 
 void string_split_tests()
 {
-    StringVector substr;
+    StringVec substr;
 
     printf("string_split - should return a single item if no delimiter is found\n");
     substr = string_split("hello world", '-');

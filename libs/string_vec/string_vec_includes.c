@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <string.h>
-#include "string_vector.h"
+#include "string_vec.h"
 
-bool string_vector_includes(StringVector *string_vec, char *str)
+bool string_vec_includes(StringVec *string_vec, char *str)
 {
     for (int i = 0; i < string_vec->len; i++)
     {
