@@ -26,6 +26,17 @@ subprojects = [json_c_dep]
 
 libs_include_dir = include_directories('libs/include')
 
+std_string_src = [
+    'libs/std_string/std_string_free.c',
+    'libs/std_string/std_string_new.c',
+    'libs/std_string/std_string_init.c',
+]
+std_string = library(
+    'std-string',
+    std_string_src, 
+    include_directories : libs_include_dir,
+)
+
 string_vector_src = [
     'libs/string_vector/string_vector_free.c',
     'libs/string_vector/string_vector_new.c',
@@ -53,7 +64,7 @@ string_utils = library(
     include_directories : libs_include_dir,
 )
 
-libs = [string_utils, string_vector]
+libs = [string_utils, string_vector, std_string]
 
 
 

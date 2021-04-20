@@ -7,6 +7,8 @@ void string_vector_free(StringVector string_vec)
     {
         free(*(string_vec.data + i));
     }
-    free(string_vec.data);
-    string_vec.len = 0;
+    if (string_vec.data != NULL)
+    {
+        free(string_vec.data);
+    }
 }

@@ -10,7 +10,7 @@ typedef enum
     JSON_FAILED_WRITING,
 } app_err;
 
-app_err app_err_init();
+app_err app_err_new();
 
 bool app_err_happened(app_err *err);
 

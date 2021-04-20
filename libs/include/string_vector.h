@@ -18,3 +18,5 @@ void string_vector_map(StringVector *string_vec, int max_str_len, char *(*fp)(ch
 void string_vector_concat(StringVector *dst, StringVector src);
 
 bool string_vector_includes(StringVector *string_vec, char *str);
+
+void string_vector_print(StringVector *string_vec);

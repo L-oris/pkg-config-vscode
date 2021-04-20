@@ -9,9 +9,7 @@ typedef struct
 
 void jsn_root_free(JsnRoot jsn_rt);
 
-JsnRoot jsn_root_read_from_file(char *path_to_json_file, app_err *err);
-
-JsnRoot jsn_root_initialize();
+JsnRoot jsn_root_get(char *path_to_json_file);
 
 void jsn_root_print(JsnRoot *jsn_rt);
 

@@ -37,6 +37,17 @@ JsnRoot jsn_root_initialize()
     return jsn_rt;
 }
 
+JsnRoot jsn_root_get(char *path_to_json_file)
+{
+    app_err local_err = app_err_new();
+    JsnRoot jsn_rt = jsn_root_read_from_file(path_to_json_file, &local_err);
+    if (app_err_happened(&local_err))
+    {
+        jsn_rt = jsn_root_initialize();
+    }
+    return jsn_rt;
+}
+
 void jsn_root_print(JsnRoot *jsn_rt)
 {
     log_infof("updated json file:\n%s\n", json_object_to_json_string_ext(jsn_rt->jsn, JSON_C_TO_STRING_PRETTY));
