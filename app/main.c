@@ -8,8 +8,6 @@
 #include "std_string.h"
 #include "string_vec.h"
 
-#define PATH_TO_JSON_FILE "../.vscode/c_cpp_properties.json"
-
 // example program: `libmongoc-1.0`
 
 int main(int argc, char *argv[])
@@ -31,17 +29,17 @@ int main(int argc, char *argv[])
         }
         std_string_free(pkg_config_stdout);
     }
+    log_infof("collected %d compiler flags\n", compiler_flags.len);
     if (compiler_flags.len == 0)
     {
-        log_infof("%s", "no compiler flags to be written, exiting earlier\n");
         string_vec_free(compiler_flags);
         return 0;
     }
 
-    JsnRoot jsn_rt = jsn_root_get(PATH_TO_JSON_FILE);
+    JsnRoot jsn_rt = jsn_root_get();
     jsn_configs jsn_confs = jsn_configs_get(&jsn_rt);
     jsn_configs_update_include_paths(jsn_confs, compiler_flags.data, compiler_flags.len);
-    jsn_root_write_to_file(&jsn_rt, PATH_TO_JSON_FILE, &err);
+    jsn_root_write_to_file(&jsn_rt, &err);
     jsn_root_free(jsn_rt);
     string_vec_free(compiler_flags);
 
@@ -50,6 +48,7 @@ int main(int argc, char *argv[])
         app_err_print(&err);
         return 1;
     }
+    log_successf("written %d compiler flags to json file\n", compiler_flags.len);
     return 0;
 }
 
