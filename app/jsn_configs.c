@@ -4,6 +4,7 @@
 #include "app_err.h"
 #include "jsn_root.h"
 #include "log.h"
+#include "string_vec.h"
 
 jsn_configs jsn_configs_get(JsnRoot *jsn_rt)
 {
@@ -29,7 +30,20 @@ jsn_configs jsn_configs_get(JsnRoot *jsn_rt)
     return confs;
 }
 
-void jsn_configs_update_include_paths(jsn_configs jsn_confs, char *new_values[], int new_values_len)
+StringVec get_current_compiler_flags_from_a_config_include_path(json_object *a_config_include_path)
+{
+    StringVec flags = string_vec_new();
+    int include_path_len = json_object_array_length(a_config_include_path);
+    for (int i = 0; i < include_path_len; i++)
+    {
+        json_object *a_jsn_flag = json_object_array_get_idx(a_config_include_path, i);
+        const char *a_flag = json_object_get_string(a_jsn_flag);
+        string_vec_push(&flags, (char *)a_flag);
+    }
+    return flags;
+}
+
+void jsn_configs_update_compiler_flags(jsn_configs jsn_confs, StringVec *new_compiler_flags)
 {
     log_infof("updating %d configuration(s)\n", jsn_confs.len);
     for (int config_idx = 0; config_idx < jsn_confs.len; config_idx++)
@@ -43,10 +57,17 @@ void jsn_configs_update_include_paths(jsn_configs jsn_confs, char *new_values[],
             json_object_object_add(a_config, "includePath", a_config_include_path);
         }
 
-        for (int value_idx = 0; value_idx < new_values_len; value_idx++)
+        StringVec current_compiler_flags = get_current_compiler_flags_from_a_config_include_path(a_config_include_path);
+
+        for (int flag_idx = 0; flag_idx < new_compiler_flags->len; flag_idx++)
         {
-            json_object *new_str = json_object_new_string(new_values[value_idx]);
-            json_object_array_add(a_config_include_path, new_str);
+            char *a_new_compiler_flag = new_compiler_flags->data[flag_idx];
+            if (!string_vec_includes(&current_compiler_flags, a_new_compiler_flag))
+            {
+                json_object *a_jsn_compiler_flag = json_object_new_string(new_compiler_flags->data[flag_idx]);
+                json_object_array_add(a_config_include_path, a_jsn_compiler_flag);
+            }
         }
+        string_vec_free(current_compiler_flags);
     };
 }

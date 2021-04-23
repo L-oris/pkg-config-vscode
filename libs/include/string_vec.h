@@ -20,3 +20,5 @@ void string_vec_concat(StringVec *dst, StringVec src);
 bool string_vec_includes(StringVec *string_vec, char *str);
 
 void string_vec_print(StringVec *string_vec);
+
+void string_vec_uniq(StringVec *string_vec);

@@ -2,6 +2,7 @@
 #include <json-c/json.h>
 #include "app_err.h"
 #include "jsn_root.h"
+#include "string_vec.h"
 
 typedef struct
 {
@@ -11,4 +12,4 @@ typedef struct
 
 jsn_configs jsn_configs_get(JsnRoot *jsn_rt);
 
-void jsn_configs_update_include_paths(jsn_configs jsn_confs, char *new_values[], int new_values_len);
+void jsn_configs_update_compiler_flags(jsn_configs jsn_confs, StringVec *new_compiler_flags);

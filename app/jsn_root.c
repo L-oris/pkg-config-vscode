@@ -23,9 +23,7 @@ JsnRoot jsn_root_read_from_file(app_err *err)
     json_object *jsn = json_object_from_file(PATH_TO_JSON_FILE);
     if (!jsn)
     {
-        // TODO LORIS: APP_ERR_FAILED_READING_FROM_JSON_FILE
-        app_err_set(err, JSON_FAILED_READING, (char *)json_util_get_last_err());
-        // TODO LORIS: printf file_not_found
+        app_err_set(err, FAILED_READING_FROM_JSON_FILE, (char *)json_util_get_last_err());
         return jsn_rt;
     }
 
@@ -50,7 +48,7 @@ JsnRoot jsn_root_get()
     JsnRoot jsn_rt = jsn_root_read_from_file(&local_err);
     if (app_err_happened(&local_err))
     {
-        log_warnf("failed to read json file at \"%s\", initializing a new one\n", PATH_TO_JSON_FILE);
+        log_warnf("json file not found at \"%s\", initializing a new one\n", PATH_TO_JSON_FILE);
         jsn_rt = jsn_root_initialize();
     }
     return jsn_rt;
@@ -77,7 +75,6 @@ void jsn_root_write_to_file(JsnRoot *jsn_rt, app_err *err)
     int write_result = json_object_to_file_ext(PATH_TO_JSON_FILE, jsn_rt->jsn, JSON_C_TO_STRING_NOSLASHESCAPE);
     if (write_result == -1)
     {
-        // TODO LORIS: APP_ERR_FAILED_WRITING_TO_JSON_FILE
-        app_err_set(err, JSON_FAILED_WRITING, (char *)json_util_get_last_err());
+        app_err_set(err, FAILED_WRITING_TO_JSON_FILE, (char *)json_util_get_last_err());
     }
 }

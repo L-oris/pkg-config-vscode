@@ -58,9 +58,31 @@ void string_vec_includes_tests()
     assert(string_vec_includes(&names, "Tom") == false);
 }
 
+void string_vec_uniq_tests()
+{
+    printf("string_vec_uniq - should remove all duplicates");
+    StringVec names = string_vec_new();
+    string_vec_push(&names, "John");
+    string_vec_push(&names, "Doe");
+    string_vec_push(&names, "Mary");
+    string_vec_push(&names, "Doe");
+    string_vec_push(&names, "James");
+    string_vec_push(&names, "James");
+    string_vec_push(&names, "John");
+
+    string_vec_uniq(&names);
+
+    assert(names.len == 4);
+    assert(string_vec_includes(&names, "John") == true);
+    assert(string_vec_includes(&names, "Doe") == true);
+    assert(string_vec_includes(&names, "Mary") == true);
+    assert(string_vec_includes(&names, "James") == true);
+}
+
 int main()
 {
     string_vec_push_tests();
     string_vec_concat_tests();
     string_vec_includes_tests();
+    string_vec_uniq_tests();
 }

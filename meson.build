@@ -45,6 +45,7 @@ string_vec_src = [
     'libs/string_vec/string_vec_concat.c',
     'libs/string_vec/string_vec_print.c',
     'libs/string_vec/string_vec_includes.c',
+    'libs/string_vec/string_vec_uniq.c',
 ]
 string_vec = library(
     'string-vec',

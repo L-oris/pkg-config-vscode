@@ -13,7 +13,6 @@ StdString compiler_flags_get_from_pkg_config(char *lib_name, app_err *err)
 {
     char command[COMMAND_BUFFER_LEN];
     sprintf(command, "pkg-config --cflags %s", lib_name);
-    // TODO LORIS: redirect stdout to file, and read it in case of error
     log_infof("pkg-config command: \"%s\"\n", command);
 
     FILE *pkg_config_stream = popen(command, "r");

@@ -29,11 +29,11 @@ void app_err_set(app_err *err, app_err new_value, char *msg)
     case INVALID_LIB_PROVIDED:
         sprintf(error_string, "invalid library provided: %s\n", msg);
         return;
-    case JSON_FAILED_READING:
-        sprintf(error_string, "failed to read json file: %s\n", msg);
+    case FAILED_READING_FROM_JSON_FILE:
+        sprintf(error_string, "failed reading from json file: %s\n", msg);
         return;
-    case JSON_FAILED_WRITING:
-        sprintf(error_string, "failed to write json file: %s\n", msg);
+    case FAILED_WRITING_TO_JSON_FILE:
+        sprintf(error_string, "failed writing to json file: %s\n", msg);
         return;
     }
 }

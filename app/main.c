@@ -29,16 +29,17 @@ int main(int argc, char *argv[])
         }
         std_string_free(pkg_config_stdout);
     }
-    log_infof("collected %d compiler flags\n", compiler_flags.len);
     if (compiler_flags.len == 0)
     {
         string_vec_free(compiler_flags);
         return 0;
     }
+    string_vec_uniq(&compiler_flags);
+    log_infof("collected %d compiler flags\n", compiler_flags.len);
 
     JsnRoot jsn_rt = jsn_root_get();
     jsn_configs jsn_confs = jsn_configs_get(&jsn_rt);
-    jsn_configs_update_include_paths(jsn_confs, compiler_flags.data, compiler_flags.len);
+    jsn_configs_update_compiler_flags(jsn_confs, &compiler_flags);
     jsn_root_write_to_file(&jsn_rt, &err);
     jsn_root_free(jsn_rt);
     string_vec_free(compiler_flags);
