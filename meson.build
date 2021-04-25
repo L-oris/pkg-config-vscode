@@ -73,21 +73,62 @@ libs = [string_utils, string_vec, std_string]
 # Unit Tests
 # ===========
 
-string_utils_tests = executable('string-utils-tests',
-    sources: 'tests/string_utils_tests.c', 
+string_split_tests = executable('string-split-tests',
+    sources: 'tests/string_split_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+test('string_split', string_split_tests)
+
+string_starts_with_tests = executable('string-starts-with-tests',
+    sources: 'tests/string_starts_with_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+test('string_starts_with', string_starts_with_tests)
+
+string_strip_prefix_tests = executable('string-strip-prefix-tests',
+    sources: 'tests/string_strip_prefix_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+test('string_strip_prefix', string_strip_prefix_tests)
+
+string_rtrim_tests = executable('string-rtrim-tests',
+    sources: 'tests/string_rtrim_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+test('string_rtrim', string_rtrim_tests)
+
+string_vec_push_tests = executable('string-vec-push-tests',
+    sources: 'tests/string_vec_push_tests.c', 
     link_with : [libs],
     include_directories : libs_include_dir,
 )
 
-test('string_utils', string_utils_tests)
+test('string_vec_push', string_vec_push_tests)
 
-string_vec_tests = executable('string-vec-tests',
-    sources: 'tests/string_vec_tests.c', 
+string_vec_concat_tests = executable('string-vec-concat-tests',
+    sources: 'tests/string_vec_concat_tests.c', 
     link_with : [libs],
     include_directories : libs_include_dir,
 )
+test('string_vec_concat', string_vec_concat_tests)
 
-test('string_vec', string_vec_tests)
+string_vec_includes_tests = executable('string-vec-includes-tests',
+    sources: 'tests/string_vec_includes_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+test('string_vec_includes', string_vec_includes_tests)
+
+string_vec_uniq_tests = executable('string-vec-uniq-tests',
+    sources: 'tests/string_vec_uniq_tests.c', 
+    link_with : [libs],
+    include_directories : libs_include_dir,
+)
+test('string_vec_uniq', string_vec_uniq_tests)
 
 
 
