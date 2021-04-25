@@ -9,6 +9,8 @@
 #define JSON_FILE_NAME "c_cpp_properties.json"
 #define PATH_TO_JSON_FILE VSCODE_DIR_NAME "/" JSON_FILE_NAME
 
+#define JSON_C_TO_STRING_SPACED_PRETTY_NOSLASHESCAPE 19 /* 0b10011 */
+
 void jsn_root_free(JsnRoot jsn_rt)
 {
     json_object_put(jsn_rt.jsn);
@@ -56,7 +58,7 @@ JsnRoot jsn_root_get()
 
 void jsn_root_print(JsnRoot *jsn_rt)
 {
-    log_debugf("updated json file:\n%s\n", json_object_to_json_string_ext(jsn_rt->jsn, JSON_C_TO_STRING_PRETTY));
+    log_debugf("updated json file:\n%s\n", json_object_to_json_string_ext(jsn_rt->jsn, JSON_C_TO_STRING_SPACED_PRETTY_NOSLASHESCAPE));
 }
 
 void jsn_root_write_to_file(JsnRoot *jsn_rt, app_err *err)
@@ -72,7 +74,7 @@ void jsn_root_write_to_file(JsnRoot *jsn_rt, app_err *err)
         log_warnf("creating json file \"%s\"\n", PATH_TO_JSON_FILE);
     }
 
-    int write_result = json_object_to_file_ext(PATH_TO_JSON_FILE, jsn_rt->jsn, JSON_C_TO_STRING_NOSLASHESCAPE);
+    int write_result = json_object_to_file_ext(PATH_TO_JSON_FILE, jsn_rt->jsn, JSON_C_TO_STRING_SPACED_PRETTY_NOSLASHESCAPE);
     if (write_result == -1)
     {
         app_err_set(err, FAILED_WRITING_TO_JSON_FILE, (char *)json_util_get_last_err());
