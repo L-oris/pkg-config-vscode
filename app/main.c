@@ -1,18 +1,33 @@
 #include <stdio.h>
+#include <string.h>
 #include "app_err.h"
 #include "compiler_flags.h"
-#include "string_utils.h"
-#include "log.h"
 #include "jsn_root.h"
 #include "jsn_configs.h"
+#include "log.h"
 #include "std_string.h"
 #include "string_vec.h"
 
 // example program: `libmongoc-1.0`
 
+static void parse_args(int argc, char *argv[], app_err *err);
+static void print_help();
+
 int main(int argc, char *argv[])
 {
     app_err err = app_err_new();
+
+    parse_args(argc, argv, &err);
+    if (app_err_happened(&err))
+    {
+        if (err == NOT_ENOUGH_ARGUMENTS)
+        {
+            app_err_print();
+        }
+        print_help();
+        return 1;
+    }
+
     StringVec compiler_flags = string_vec_new();
     for (int i = 1; i < argc; i++)
     {
@@ -51,6 +66,31 @@ int main(int argc, char *argv[])
     }
     log_successf("%s", "json file updated\n");
     return 0;
+}
+
+static void parse_args(int argc, char *argv[], app_err *err)
+{
+    if (argc < 2)
+    {
+        app_err_set(err, NOT_ENOUGH_ARGUMENTS, "");
+        return;
+    }
+    if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
+    {
+        app_err_set(err, HELP_FLAG, "");
+        return;
+    }
+}
+
+static void print_help()
+{
+    printf("\nUSAGE:\n"
+           "\tpkg-config-vscode [FLAGS] [LIB]...\n"
+           "\nARGS:\n"
+           "\t<LIB>...         Libraries to search include paths for\n"
+           "\nFLAGS:\n"
+           "\t-h, --help       Prints help information\n"
+           "\n");
 }
 
 // DOCS: https://json-c.github.io/json-c/json-c-0.15/doc/html/json__object_8h.html

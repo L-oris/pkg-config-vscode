@@ -23,8 +23,13 @@ void app_err_set(app_err *err, app_err new_value, char *msg)
     case OK:
         sprintf(error_string, "");
         return;
-    case INVALID_SHELL_COMMAND:
-        sprintf(error_string, "invalid shell command: %s\n", msg);
+    case HELP_FLAG:
+        return;
+    case NOT_ENOUGH_ARGUMENTS:
+        sprintf(error_string, "at least one argument required\n");
+        return;
+    case INVALID_PKG_CONFIG_COMMAND:
+        sprintf(error_string, "invalid pkg-config command: %s\n", msg);
         return;
     case INVALID_LIB_PROVIDED:
         sprintf(error_string, "invalid library provided: %s\n", msg);

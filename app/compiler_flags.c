@@ -19,7 +19,7 @@ StdString compiler_flags_get_from_pkg_config(char *lib_name, app_err *err)
     if (!pkg_config_stream)
     {
         pclose(pkg_config_stream);
-        app_err_set(err, INVALID_SHELL_COMMAND, command);
+        app_err_set(err, INVALID_PKG_CONFIG_COMMAND, command);
         return std_string_new();
     }
 
