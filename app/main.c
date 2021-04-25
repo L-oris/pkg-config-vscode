@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         app_err_print(&err);
         return 1;
     }
-    log_successf("written %d compiler flags to json file\n", compiler_flags.len);
+    log_successf("%s", "json file updated\n");
     return 0;
 }
 
