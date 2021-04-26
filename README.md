@@ -39,11 +39,37 @@ pkg-config-vscode [FLAGS] [LIB]...
 pkg-config-vscode libmongoc-1.0
 ```
 
-## Try it out
+## Try it out (for Mac)
+
+We're going to build a simple desktop application with gtk.
+First off, let's install the gtk toolkit with homebrew:
 
 ```sh
-you-dl --output-dir ./Videos \
-    https://www.youtube.com/watch?v=MAlSjtxy5ak \
-    https://www.youtube.com/watch?v=4jOV0gaNKj0 \
-    https://www.youtube.com/watch?v=pVjsCYlc1IY
+brew install gtk+3
 ```
+
+Here's the "hello world" code (simply clone the repo if you want to get it quicker):
+
+```sh
+git clone https://github.com/L-oris/gtk-sample-app
+cd gtk-sample-app
+```
+
+Compile and run the app:
+
+```sh
+meson setup build
+cd build
+meson compile
+./demo
+```
+
+All working fine so far.
+VSCode, however, won't be able to provide any type definition yet, and will be complaining with a message similar to `#include errors detected. Please update your includePath.`.
+To overcome the issue, `cd` into the project main directory and run:
+
+```sh
+pkg-config-vscode gtk+-3.0
+```
+
+It's going to create a new json file at `.vscode/c_cpp_properties.json` with all the new things you need.
