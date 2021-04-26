@@ -32,9 +32,10 @@ std_string_src = [
     'libs/std_string/std_string_init.c',
 ]
 std_string = library(
-    'std-string',
+    'pkg-config-vscode-std-string',
     std_string_src, 
     include_directories : libs_include_dir,
+    install : true,
 )
 
 string_vec_src = [
@@ -48,9 +49,10 @@ string_vec_src = [
     'libs/string_vec/string_vec_uniq.c',
 ]
 string_vec = library(
-    'string-vec',
+    'pkg-config-vscode-string-vec',
     string_vec_src, 
     include_directories : libs_include_dir,
+    install : true,
 )
 
 string_utils_src = [
@@ -60,9 +62,10 @@ string_utils_src = [
     'libs/string_utils/string_strip_prefix.c',
 ]
 string_utils = library(
-    'string-utils',
+    'pkg-config-vscode-string-utils',
     string_utils_src, 
     include_directories : libs_include_dir,
+    install : true,
 )
 
 libs = [string_utils, string_vec, std_string]
