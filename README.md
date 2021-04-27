@@ -1,6 +1,10 @@
 # pkg-config-vscode
 
-A tiny and easy to use YouTube downloader.
+This program works in tandem with the C/C++ extension for VSCode.
+
+It uses `pkg-config` to add metainformation about installed libraries into `.vscode/c_cpp_properties.json`, so that Intellisense can work as expected with those.
+
+I've been developing on OSX, so I cannot guarantee it works as expected on your favorite Linux disto.
 <br/>
 <br/>
 ![](./screen-record.gif)
@@ -10,7 +14,7 @@ A tiny and easy to use YouTube downloader.
 #### Prerequisites
 
 - clang (should come already installed with the OS)
-- cmake>=2.8, >=3.16 recommended (for json-c)
+- cmake>=2.8 (>=3.16 recommended)
 - meson (https://mesonbuild.com/SimpleStart.html)
 
 #### Build & Install
@@ -39,16 +43,18 @@ pkg-config-vscode [FLAGS] [LIB]...
 pkg-config-vscode libmongoc-1.0
 ```
 
-## Try it out (for Mac)
+## Try it out
 
-We're going to build a simple desktop application with gtk.
-First off, let's install the gtk toolkit with homebrew:
+First off, make sure you have the C/C++ extension for VSCode installed.
+
+Next up, we're going to build a simple desktop application with gtk.
+If you haven't already, install the gtk toolkit with homebrew:
 
 ```sh
 brew install gtk+3
 ```
 
-Here's the "hello world" code (simply clone the repo if you want to get it quicker):
+This is a "hello world" gtk application that you can clone:
 
 ```sh
 git clone https://github.com/L-oris/gtk-sample-app
@@ -64,12 +70,14 @@ meson compile
 ./demo
 ```
 
-All working fine so far.
-VSCode, however, won't be able to provide any type definition yet, and will be complaining with a message similar to `#include errors detected. Please update your includePath.`.
-To overcome the issue, `cd` into the project main directory and run:
+The application is (hopefully) going to start as expected.
+
+VSCode, however, will be complaining with a message along the lines of `#include errors detected. Please update your includePath.`.
+
+That's what `pkg-config-vscode` is going to fix; `cd` in the project root and run:
 
 ```sh
 pkg-config-vscode gtk+-3.0
 ```
 
-It's going to create a new json file at `.vscode/c_cpp_properties.json` with all the new things you need.
+The program is going to create a new json file at `.vscode/c_cpp_properties.json` with enough settings to make IntelliSense happy. Ready to go!
