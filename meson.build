@@ -109,7 +109,6 @@ string_vec_push_tests = executable('string-vec-push-tests',
     link_with : [libs],
     include_directories : libs_include_dir,
 )
-
 test('string_vec_push', string_vec_push_tests)
 
 string_vec_concat_tests = executable('string-vec-concat-tests',

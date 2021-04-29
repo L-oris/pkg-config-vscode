@@ -8,8 +8,6 @@
 #include "std_string.h"
 #include "string_vec.h"
 
-// example program: `libmongoc-1.0`
-
 static void parse_args(int argc, char *argv[], app_err *err);
 static void print_help();
 
@@ -92,6 +90,3 @@ static void print_help()
            "\t-h, --help       Prints help information\n"
            "\n");
 }
-
-// DOCS: https://json-c.github.io/json-c/json-c-0.15/doc/html/json__object_8h.html
-// TUTORIAL: https://github.com/rbtylee/tutorial-jsonc/blob/master/tutorial/index.md

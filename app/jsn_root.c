@@ -9,6 +9,7 @@
 #define JSON_FILE_NAME "c_cpp_properties.json"
 #define PATH_TO_JSON_FILE VSCODE_DIR_NAME "/" JSON_FILE_NAME
 
+// Flags here: https://github.com/json-c/json-c/blob/041cef434afe0d0c6da8b6ac1d1fa26087246dda/json_object.h#L49
 #define JSON_C_TO_STRING_SPACED_PRETTY_NOSLASHESCAPE 19 /* 0b10011 */
 
 void jsn_root_free(JsnRoot jsn_rt)
