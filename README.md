@@ -2,11 +2,12 @@
 
 This program works in tandem with the C/C++ extension for VSCode.
 
-It uses `pkg-config` to add metainformation about installed libraries into `.vscode/c_cpp_properties.json`, so that Intellisense can work with them.
+It uses `pkg-config` to add metainformation about installed libraries into `.vscode/c_cpp_properties.json`, so that IntelliSense can work with them.
 
 <br/>
 <br/>
 ![](./screen-record.gif)
+<br/>
 <br/>
 
 ## Install from source
@@ -39,7 +40,7 @@ meson install
 ```sh
 pkg-config-vscode [FLAGS] [LIB]...
 
-# example: adding compiler flags for the MongoDB C Driver (http://mongoc.org/)
+# example: adding metainformation for the MongoDB C Driver (http://mongoc.org/)
 pkg-config-vscode libmongoc-1.0
 ```
 
@@ -82,6 +83,10 @@ pkg-config-vscode gtk+-3.0
 
 The program is going to create a new configuration file at `.vscode/c_cpp_properties.json` with enough settings to make IntelliSense happy. Ready to go!
 
+## Acknowledgments
+
+Kudos to this [tutorial](https://github.com/rbtylee/tutorial-jsonc), which helped me out a lot with the [json-c](https://github.com/json-c/json-c) library.
+
 ## Limitations
 
-I've been developing on macOS, so I cannot guarantee it works as expected on your favorite Linux distro.
+I've been developing on macOS, so I cannot guarantee `pkg-config-vscode` works as expected on your favorite Linux distro.
