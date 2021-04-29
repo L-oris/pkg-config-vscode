@@ -3,14 +3,9 @@
 This program works in tandem with the C/C++ extension for VSCode.
 
 It uses `pkg-config` to add metainformation about installed libraries into `.vscode/c_cpp_properties.json`, so that IntelliSense can work with them.
-
 <br/>
 <br/>
-
 ![](./screen-record.gif)
-
-<br/>
-<br/>
 
 ## Install from source
 
