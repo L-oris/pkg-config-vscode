@@ -6,7 +6,9 @@ It uses `pkg-config` to add metainformation about installed libraries into `.vsc
 
 <br/>
 <br/>
+
 ![](./screen-record.gif)
+
 <br/>
 <br/>
 
